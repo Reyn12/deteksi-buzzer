@@ -146,7 +146,15 @@ def render_scatter_plot(user_activity: pd.DataFrame):
 
 def render_top_buzzers(user_activity: pd.DataFrame):
     """Render tabel top suspected buzzers."""
-    st.markdown("### 🚨 Top Suspected Buzzers")
+    # Container dengan padding horizontal
+    st.markdown("""
+    <div style="padding: 0 2rem;">
+        <h3>🚨 Top Suspected Buzzers</h3>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Wrapper dengan padding
+    st.markdown('<div style="padding: 0 2rem;">', unsafe_allow_html=True)
     
     tabs = st.tabs(["Rule-Based", "Machine Learning", "High Confidence"])
     
@@ -200,6 +208,8 @@ def render_top_buzzers(user_activity: pd.DataFrame):
             )
         else:
             st.info("Tidak ada user dengan High Confidence")
+    
+    st.markdown('</div>', unsafe_allow_html=True)
 
 
 def render_download_button(user_activity: pd.DataFrame):

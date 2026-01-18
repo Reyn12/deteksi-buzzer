@@ -117,7 +117,8 @@ class BuzzerDetector:
             Self untuk method chaining
         """
         dup_ratio = self.data.groupby('authorDisplayName').apply(
-            lambda x: x.duplicated(subset=['textDisplay']).sum() / len(x)
+            lambda x: x.duplicated(subset=['textDisplay']).sum() / len(x),
+            include_groups=False
         ).reset_index()
         
         dup_ratio.columns = ['author', 'duplicate_ratio']
