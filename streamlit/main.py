@@ -225,60 +225,86 @@ def render_main_header():
     """, unsafe_allow_html=True)
 
 
-def process_detection(files):
+def process_detection(files, progress_container):
     """
     Proses deteksi buzzer dari files yang diupload.
     
     Args:
         files: List file CSV yang diupload
+        progress_container: Container untuk progress UI
         
     Returns:
         Tuple (user_activity DataFrame, summary dict)
     """
-    progress = st.progress(0, "Memulai proses...")
-    
     try:
-        # Step 1: Load data
-        progress.progress(10, "📂 Memuat data...")
-        loader = DataLoader()
-        merged_data = loader.load_multiple_files(files)
-        load_stats = loader.get_stats()
-        
-        # Step 2: Clean data
-        progress.progress(25, "🧹 Membersihkan data...")
-        cleaner = DataCleaner(merged_data)
-        cleaned_data = cleaner.process_all()
-        clean_stats = cleaner.get_cleaning_stats()
-        
-        # Step 3: Extract features
-        progress.progress(40, "⚙️ Ekstraksi fitur...")
-        extractor = FeatureExtractor(cleaned_data)
-        featured_data = extractor.extract_all()
-        tfidf_matrix = extractor.get_tfidf_matrix()
-        
-        # Step 4: Network analysis
-        progress.progress(55, "🕸️ Analisis jaringan...")
-        network = NetworkAnalyzer(featured_data, tfidf_matrix)
-        centrality_df = network.analyze(threshold=0.3)
-        network_stats = network.get_network_stats()
-        
-        # Step 5: Detect buzzers
-        progress.progress(75, "🔍 Mendeteksi buzzer...")
-        detector = BuzzerDetector(featured_data, centrality_df)
-        user_activity = detector.detect()
-        summary = detector.get_summary()
-        
-        # Add additional stats to summary
-        summary['load_stats'] = load_stats
-        summary['clean_stats'] = clean_stats
-        summary['network_stats'] = network_stats
-        
-        progress.progress(100, "✅ Selesai!")
+        with progress_container:
+            # Progress UI yang lebih bagus
+            st.markdown("""
+            <div style="
+                background: #1E1E1E;
+                padding: 1.5rem;
+                border-radius: 15px;
+                border: 1px solid #333;
+                max-width: 500px;
+                margin: 0 auto;
+            ">
+                <h4 style="color: #667eea; margin: 0 0 1rem 0; text-align: center;">
+                    ⏳ Memproses Data...
+                </h4>
+            """, unsafe_allow_html=True)
+            
+            progress_bar = st.progress(0)
+            status_text = st.empty()
+            
+            st.markdown("</div>", unsafe_allow_html=True)
+            
+            # Step 1: Load data
+            status_text.markdown("📂 **Memuat data...**")
+            progress_bar.progress(10)
+            loader = DataLoader()
+            merged_data = loader.load_multiple_files(files)
+            load_stats = loader.get_stats()
+            
+            # Step 2: Clean data
+            status_text.markdown("🧹 **Membersihkan data...**")
+            progress_bar.progress(25)
+            cleaner = DataCleaner(merged_data)
+            cleaned_data = cleaner.process_all()
+            clean_stats = cleaner.get_cleaning_stats()
+            
+            # Step 3: Extract features
+            status_text.markdown("⚙️ **Ekstraksi fitur...**")
+            progress_bar.progress(40)
+            extractor = FeatureExtractor(cleaned_data)
+            featured_data = extractor.extract_all()
+            tfidf_matrix = extractor.get_tfidf_matrix()
+            
+            # Step 4: Network analysis
+            status_text.markdown("🕸️ **Analisis jaringan...**")
+            progress_bar.progress(55)
+            network = NetworkAnalyzer(featured_data, tfidf_matrix)
+            centrality_df = network.analyze(threshold=0.3)
+            network_stats = network.get_network_stats()
+            
+            # Step 5: Detect buzzers
+            status_text.markdown("🔍 **Mendeteksi buzzer...**")
+            progress_bar.progress(75)
+            detector = BuzzerDetector(featured_data, centrality_df)
+            user_activity = detector.detect()
+            summary = detector.get_summary()
+            
+            # Add additional stats to summary
+            summary['load_stats'] = load_stats
+            summary['clean_stats'] = clean_stats
+            summary['network_stats'] = network_stats
+            
+            # Done
+            status_text.markdown("✅ **Selesai!**")
+            progress_bar.progress(100)
         
         return user_activity, summary
         
     except Exception as e:
-        progress.empty()
         st.error(f"❌ Error: {str(e)}")
         return None, None
 
@@ -309,12 +335,18 @@ def render_main_feature():
     
     # Process detection
     if detect_button and uploaded_files:
-        with st.spinner("Memproses..."):
-            results, summary = process_detection(uploaded_files)
-            
-            if results is not None:
-                st.session_state.results = results
-                st.session_state.summary = summary
+        # Container untuk progress
+        progress_container = st.empty()
+        
+        results, summary = process_detection(uploaded_files, progress_container)
+        
+        # Clear progress setelah selesai
+        progress_container.empty()
+        
+        if results is not None:
+            st.session_state.results = results
+            st.session_state.summary = summary
+            st.rerun()
     
     # Display results
     if st.session_state.results is not None:
