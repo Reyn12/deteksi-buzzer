@@ -13,6 +13,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 from components.file_uploader import render_file_uploader
 from components.results_display import render_results
+from components.docs_page import render_docs
 from services.data_loader import DataLoader
 from services.data_cleaner import DataCleaner
 from services.feature_extractor import FeatureExtractor
@@ -26,7 +27,7 @@ def setup_page():
         page_title="Deteksi Buzzer",
         page_icon="🔍",
         layout="wide",
-        initial_sidebar_state="collapsed"
+        initial_sidebar_state="expanded"
     )
     
     # Custom CSS untuk UI modern
@@ -40,6 +41,17 @@ def setup_page():
         /* Hide default header */
         header[data-testid="stHeader"] {
             background: transparent;
+        }
+        
+        /* Sidebar styling */
+        [data-testid="stSidebar"] {
+            background: linear-gradient(180deg, #1a1a2e 0%, #0E1117 100%);
+            border-right: 1px solid #333;
+        }
+        
+        [data-testid="stSidebar"] .stRadio > label {
+            color: white;
+            font-weight: bold;
         }
         
         /* Cards styling */
@@ -110,12 +122,81 @@ def setup_page():
         .stAlert {
             border-radius: 10px;
         }
+        
+        /* Sidebar radio buttons */
+        .stRadio > div {
+            gap: 0.5rem;
+        }
+        
+        .stRadio > div > label {
+            background: #1E1E1E;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            border: 1px solid #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .stRadio > div > label:hover {
+            border-color: #667eea;
+        }
+        
+        .stRadio > div > label[data-checked="true"] {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-color: transparent;
+        }
     </style>
     """, unsafe_allow_html=True)
 
 
-def render_header():
-    """Render header aplikasi."""
+def render_sidebar():
+    """Render sidebar navigation."""
+    with st.sidebar:
+        st.markdown("""
+        <div style="text-align: center; padding: 1rem 0; margin-bottom: 1rem;">
+            <h2 style="
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                margin: 0;
+            ">🔍 Menu</h2>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Navigation menu
+        page = st.radio(
+            "Navigation",
+            options=["🚀 Main Feature", "📚 Dokumentasi"],
+            label_visibility="collapsed"
+        )
+        
+        st.markdown("---")
+        
+        # Info box
+        st.markdown("""
+        <div style="
+            background: #1E1E1E;
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid #333;
+            margin-top: 1rem;
+        ">
+            <p style="color: #888; font-size: 0.85rem; margin: 0;">
+                <b style="color: #667eea;">Kelompok 3</b><br><br>
+                Muhamad Hilmi F<br>
+                Renaldi Maulana<br>
+                Muhammad Rizky F<br>
+                Alif Vidya<br>
+                Hamid Abdul Aziz
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        return page
+
+
+def render_main_header():
+    """Render header untuk main feature."""
     st.markdown("""
     <div style="
         text-align: center;
@@ -202,10 +283,9 @@ def process_detection(files):
         return None, None
 
 
-def main():
-    """Main function untuk aplikasi."""
-    setup_page()
-    render_header()
+def render_main_feature():
+    """Render halaman main feature (deteksi buzzer)."""
+    render_main_header()
     
     # Initialize session state
     if 'results' not in st.session_state:
@@ -266,25 +346,20 @@ def main():
             st.session_state.results,
             st.session_state.summary
         )
+
+
+def main():
+    """Main function untuk aplikasi."""
+    setup_page()
     
-    # Footer
-    st.markdown("---")
-    st.markdown("""
-    <div style="
-        text-align: center;
-        color: #666;
-        padding: 1rem;
-    ">
-        <p style="font-weight: bold; color: #ffffff;">Kelompok 3</p>
-        <p style="font-size: 0.9rem; line-height: 1.8; color: #ffffff;">
-            Muhamad Hilmi F - 10122028 (PM)<br>
-            Renaldi Maulana - 10122002<br>
-            Muhammad Rizky F - 10122007<br>
-            Alif Vidya - 10122029<br>
-            Hamid Abdul Aziz - 10122038
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
+    # Render sidebar dan dapatkan halaman yang dipilih
+    selected_page = render_sidebar()
+    
+    # Render halaman sesuai pilihan
+    if selected_page == "🚀 Main Feature":
+        render_main_feature()
+    elif selected_page == "📚 Dokumentasi":
+        render_docs()
 
 
 if __name__ == "__main__":
