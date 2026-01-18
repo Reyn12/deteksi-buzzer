@@ -47,6 +47,12 @@ def setup_page():
         [data-testid="stSidebar"] {
             background: linear-gradient(180deg, #1a1a2e 0%, #0E1117 100%);
             border-right: 1px solid #333;
+            min-width: 280px;
+            max-width: 280px;
+        }
+        
+        [data-testid="stSidebar"] > div:first-child {
+            width: 280px;
         }
         
         [data-testid="stSidebar"] .stRadio > label {
@@ -181,13 +187,13 @@ def render_sidebar():
             border: 1px solid #333;
             margin-top: 1rem;
         ">
-            <p style="color: #888; font-size: 0.85rem; margin: 0;">
+            <p style="color: #ffffff; font-size: 0.85rem; margin: 0;">
                 <b style="color: #667eea;">Kelompok 3</b><br><br>
-                Muhamad Hilmi F<br>
-                Renaldi Maulana<br>
-                Muhammad Rizky F<br>
-                Alif Vidya<br>
-                Hamid Abdul Aziz
+                Muhamad Hilmi F - 10122028 (PM)<br>
+                Renaldi Maulana - 10122002<br>
+                Muhammad Rizky F - 10122007<br>
+                Alif Vidya - 10122029<br>
+                Hamid Abdul Aziz - 10122038
             </p>
         </div>
         """, unsafe_allow_html=True)
