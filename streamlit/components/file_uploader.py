@@ -17,7 +17,13 @@ def render_file_uploader() -> Optional[List]:
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         padding: 2rem;
         border-radius: 15px;
+        align-items: center;
+        justify-content: center;
         margin-bottom: 2rem;
+        text-align: center;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
     ">
         <h3 style="color: white; margin: 0;">📤 Upload Dataset</h3>
         <p style="color: rgba(255,255,255,0.8); margin-top: 0.5rem;">

@@ -223,8 +223,8 @@ def main():
     with col2:
         detect_button = st.button(
             "🚀 Deteksi Buzzer",
-            use_container_width=True,
-            disabled=uploaded_files is None
+            disabled=uploaded_files is None,
+            use_container_width=True
         )
     
     # Process detection

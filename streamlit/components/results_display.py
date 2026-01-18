@@ -93,7 +93,7 @@ def render_distribution_chart(user_activity: pd.DataFrame):
             plot_bgcolor='rgba(0,0,0,0)',
             font_color='white'
         )
-        st.plotly_chart(fig1, use_container_width=True)
+        st.plotly_chart(fig1)
     
     with col2:
         # ML distribution
@@ -113,7 +113,7 @@ def render_distribution_chart(user_activity: pd.DataFrame):
             plot_bgcolor='rgba(0,0,0,0)',
             font_color='white'
         )
-        st.plotly_chart(fig2, use_container_width=True)
+        st.plotly_chart(fig2)
 
 
 def render_scatter_plot(user_activity: pd.DataFrame):
@@ -141,7 +141,7 @@ def render_scatter_plot(user_activity: pd.DataFrame):
         xaxis_title="Posting Rate (komentar/jam)",
         yaxis_title="Avg Text Similarity"
     )
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig)
 
 
 def render_top_buzzers(user_activity: pd.DataFrame):
@@ -161,7 +161,6 @@ def render_top_buzzers(user_activity: pd.DataFrame):
                 subset=['buzzer_score'],
                 cmap='Reds'
             ),
-            use_container_width=True,
             hide_index=True
         )
     
@@ -178,7 +177,6 @@ def render_top_buzzers(user_activity: pd.DataFrame):
                 subset=['isolation_forest_score'],
                 cmap='Reds_r'
             ),
-            use_container_width=True,
             hide_index=True
         )
     
@@ -198,7 +196,6 @@ def render_top_buzzers(user_activity: pd.DataFrame):
                     subset=['buzzer_score'],
                     cmap='Reds'
                 ),
-                use_container_width=True,
                 hide_index=True
             )
         else:
@@ -222,8 +219,7 @@ def render_download_button(user_activity: pd.DataFrame):
         label="📥 Download CSV",
         data=csv,
         file_name="buzzer_detection_results.csv",
-        mime="text/csv",
-        use_container_width=True
+        mime="text/csv"
     )
 
 
