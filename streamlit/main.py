@@ -133,27 +133,93 @@ def setup_page():
             border-radius: 10px;
         }
         
-        /* Sidebar radio buttons */
-        .stRadio > div {
-            gap: 0.5rem;
+        /* Selectbox - Light Mode */
+        .stSelectbox label {
+            color: #333 !important;
         }
         
-        .stRadio > div > label {
-            background: #1E1E1E;
-            padding: 1rem 1.5rem;
+        .stSelectbox > div > div {
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
             border-radius: 10px;
-            border: 1px solid #333;
+        }
+        
+        .stSelectbox [data-baseweb="select"] {
+            background: #ffffff;
+        }
+        
+        .stSelectbox [data-baseweb="select"] > div {
+            background: #ffffff;
+            border-color: #e0e0e0;
+            color: #333 !important;
+        }
+        
+        /* Selectbox text & icon */
+        .stSelectbox [data-baseweb="select"] span {
+            color: #333 !important;
+        }
+        
+        .stSelectbox [data-baseweb="select"] svg {
+            fill: #333 !important;
+        }
+        
+        /* Dropdown menu - Light Mode */
+        [data-baseweb="popover"] {
+            background: #ffffff !important;
+        }
+        
+        [data-baseweb="menu"] {
+            background: #ffffff !important;
+        }
+        
+        [data-baseweb="menu"] li {
+            background: #ffffff !important;
+            color: #333 !important;
+        }
+        
+        [data-baseweb="menu"] li:hover {
+            background: #f0f0f0 !important;
+        }
+        
+        /* Sidebar radio buttons - Light Mode */
+        [data-testid="stSidebar"] .stRadio > div {
+            gap: 0.5rem;
+            flex-direction: column;
+        }
+        
+        [data-testid="stSidebar"] .stRadio > div > label {
+            background: #f8f9fa !important;
+            padding: 1rem 1.5rem !important;
+            border-radius: 10px !important;
+            border: 1px solid #e0e0e0 !important;
             cursor: pointer;
             transition: all 0.3s ease;
         }
         
-        .stRadio > div > label:hover {
-            border-color: #667eea;
+        [data-testid="stSidebar"] .stRadio > div > label p,
+        [data-testid="stSidebar"] .stRadio > div > label span,
+        [data-testid="stSidebar"] .stRadio > div > label div {
+            color: #333 !important;
         }
         
-        .stRadio > div > label[data-checked="true"] {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-color: transparent;
+        [data-testid="stSidebar"] .stRadio > div > label:hover {
+            border-color: #667eea !important;
+            background: #eef0f5 !important;
+        }
+        
+        [data-testid="stSidebar"] .stRadio > div > label[data-checked="true"],
+        [data-testid="stSidebar"] .stRadio > div > label:has(input:checked) {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+            border-color: transparent !important;
+        }
+        
+        [data-testid="stSidebar"] .stRadio > div > label[data-checked="true"] p,
+        [data-testid="stSidebar"] .stRadio > div > label[data-checked="true"] span,
+        [data-testid="stSidebar"] .stRadio > div > label[data-checked="true"] div,
+        [data-testid="stSidebar"] .stRadio > div > label:has(input:checked) p,
+        [data-testid="stSidebar"] .stRadio > div > label:has(input:checked) span,
+        [data-testid="stSidebar"] .stRadio > div > label:has(input:checked) div {
+            color: white !important;
         }
     </style>
     """, unsafe_allow_html=True)
