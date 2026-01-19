@@ -94,6 +94,29 @@ def setup_page():
             border: 1px solid #e0e0e0;
         }
         
+        .stFileUploader label,
+        .stFileUploader span,
+        .stFileUploader p,
+        .stFileUploader div,
+        .stFileUploader small {
+            color: #333 !important;
+        }
+        
+        [data-testid="stFileUploader"] section {
+            background: #f8f9fa !important;
+            border: 1px dashed #ccc !important;
+        }
+        
+        [data-testid="stFileUploader"] section span,
+        [data-testid="stFileUploader"] section small {
+            color: #666 !important;
+        }
+        
+        /* Uploaded file name */
+        [data-testid="stFileUploader"] [data-testid="stMarkdownContainer"] small {
+            color: #333 !important;
+        }
+        
         /* Progress bar */
         .stProgress > div > div {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -123,9 +146,64 @@ def setup_page():
         
         /* Expander - Light Mode */
         .streamlit-expanderHeader {
-            background: #ffffff;
+            background: #ffffff !important;
             border-radius: 10px;
-            border: 1px solid #e0e0e0;
+            border: 1px solid #e0e0e0 !important;
+            color: #333 !important;
+        }
+        
+        .streamlit-expanderHeader p,
+        .streamlit-expanderHeader span,
+        .streamlit-expanderHeader svg {
+            color: #333 !important;
+            fill: #333 !important;
+        }
+        
+        [data-testid="stExpander"] {
+            background: #ffffff !important;
+            border: 1px solid #e0e0e0 !important;
+            border-radius: 10px !important;
+        }
+        
+        [data-testid="stExpander"] details {
+            background: #ffffff !important;
+        }
+        
+        [data-testid="stExpander"] summary {
+            color: #333 !important;
+        }
+        
+        [data-testid="stExpander"] summary span,
+        [data-testid="stExpander"] summary p,
+        [data-testid="stExpander"] summary svg {
+            color: #333 !important;
+            fill: #333 !important;
+        }
+        
+        [data-testid="stExpander"] [data-testid="stMarkdownContainer"] p {
+            color: #333 !important;
+        }
+        
+        [data-testid="stExpander"] [data-testid="stMarkdownContainer"] li,
+        [data-testid="stExpander"] [data-testid="stMarkdownContainer"] ul {
+            color: #333 !important;
+        }
+        
+        /* Code/backtick tetap putih dengan background gelap */
+        [data-testid="stExpander"] [data-testid="stMarkdownContainer"] code {
+            color: #fff !important;
+            background: #667eea !important;
+            padding: 2px 6px !important;
+            border-radius: 4px !important;
+        }
+        
+        /* Expander header text - hitam saat collapsed, tetap readable saat expanded */
+        [data-testid="stExpander"] summary {
+            background: #ffffff !important;
+        }
+        
+        [data-testid="stExpander"] summary span {
+            color: #333 !important;
         }
         
         /* Success/Warning/Info boxes */
