@@ -117,6 +117,18 @@ def setup_page():
             color: #333 !important;
         }
         
+        /* Browse Files button - Light Mode */
+        [data-testid="stFileUploader"] button {
+            background: #ffffff !important;
+            color: #333 !important;
+            border: 1px solid #e0e0e0 !important;
+        }
+        
+        [data-testid="stFileUploader"] button:hover {
+            background: #f0f0f0 !important;
+            border-color: #667eea !important;
+        }
+        
         /* Progress bar */
         .stProgress > div > div {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);

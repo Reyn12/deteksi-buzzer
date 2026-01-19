@@ -11,7 +11,7 @@ from utils.helpers import calculate_percentage
 
 def render_summary_cards(summary: dict):
     """Render kartu ringkasan hasil deteksi."""
-    st.markdown("### 📊 Ringkasan Hasil")
+    st.markdown('<h3 style="color: #333;">📊 Ringkasan Hasil</h3>', unsafe_allow_html=True)
     
     cols = st.columns(4)
     
@@ -70,7 +70,7 @@ def render_summary_cards(summary: dict):
 
 def render_distribution_chart(user_activity: pd.DataFrame):
     """Render chart distribusi kategori buzzer."""
-    st.markdown("### 📈 Distribusi Kategori")
+    st.markdown('<h3 style="color: #333;">📈 Distribusi Kategori</h3>', unsafe_allow_html=True)
     
     col1, col2 = st.columns(2)
     
@@ -118,7 +118,7 @@ def render_distribution_chart(user_activity: pd.DataFrame):
 
 def render_scatter_plot(user_activity: pd.DataFrame):
     """Render scatter plot posting rate vs text similarity."""
-    st.markdown("### 🎯 Analisis Pola Buzzer")
+    st.markdown('<h3 style="color: #333;">🎯 Analisis Pola Buzzer</h3>', unsafe_allow_html=True)
     
     fig = px.scatter(
         user_activity,
@@ -214,7 +214,7 @@ def render_top_buzzers(user_activity: pd.DataFrame):
 
 def render_conclusion(user_activity: pd.DataFrame, summary: dict):
     """Render kesimpulan hasil deteksi."""
-    st.markdown("### 📝 Kesimpulan")
+    st.markdown('<h3 style="color: #333;">📝 Kesimpulan</h3>', unsafe_allow_html=True)
     
     total = summary['total_users']
     
@@ -282,7 +282,7 @@ def render_conclusion(user_activity: pd.DataFrame, summary: dict):
 
 def render_download_button(user_activity: pd.DataFrame):
     """Render tombol download hasil."""
-    st.markdown("### 💾 Export Hasil")
+    st.markdown('<h3 style="color: #333;">💾 Export Hasil</h3>', unsafe_allow_html=True)
     
     export_cols = [
         'author', 'comment_count', 'posting_rate',
