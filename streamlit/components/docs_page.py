@@ -14,24 +14,27 @@ def render_docs():
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         ">📚 Dokumentasi</h1>
-        <p style="color: #888;">Penjelasan metodologi dan implementasi deteksi buzzer</p>
+        <p style="color: #666;">Penjelasan metodologi dan implementasi deteksi buzzer</p>
     </div>
     """, unsafe_allow_html=True)
     
     # Overview
-    st.markdown("## 🎯 Overview")
+    st.markdown('<h2 style="color: #333;">🎯 Overview</h2>', unsafe_allow_html=True)
     st.markdown("""
-    Aplikasi ini mendeteksi **buzzer** pada komentar YouTube menggunakan 
+    <p style="color: #333;">
+    Aplikasi ini mendeteksi <b>buzzer</b> pada komentar YouTube menggunakan 
     kombinasi 2 pendekatan:
-    
-    1. **Rule-Based Detection** - Scoring system dengan 6 kriteria
-    2. **Machine Learning** - Isolation Forest untuk Anomaly Detection
-    """)
+    </p>
+    <ol style="color: #333;">
+        <li><b>Rule-Based Detection</b> - Scoring system dengan 6 kriteria</li>
+        <li><b>Machine Learning</b> - Isolation Forest untuk Anomaly Detection</li>
+    </ol>
+    """, unsafe_allow_html=True)
     
     st.markdown("---")
     
     # Metodologi
-    st.markdown("## 📊 Metodologi")
+    st.markdown('<h2 style="color: #333;">📊 Metodologi</h2>', unsafe_allow_html=True)
     
     with st.expander("### 1. Data Preprocessing", expanded=True):
         st.markdown("""
@@ -84,11 +87,9 @@ def render_docs():
     st.markdown("---")
     
     # Rule-Based Detection
-    st.markdown("## 🔍 Rule-Based Detection")
+    st.markdown('<h2 style="color: #333;">🔍 Rule-Based Detection</h2>', unsafe_allow_html=True)
     
-    st.markdown("""
-    Sistem scoring dengan **6 kriteria**. Setiap kriteria memberikan skor tertentu:
-    """)
+    st.markdown('<p style="color: #333;">Sistem scoring dengan <b>6 kriteria</b>. Setiap kriteria memberikan skor tertentu:</p>', unsafe_allow_html=True)
     
     col1, col2 = st.columns(2)
     
@@ -110,9 +111,7 @@ def render_docs():
         | Degree Centrality | > Q75 | +1 |
         """)
     
-    st.markdown("""
-    **Klasifikasi berdasarkan total skor:**
-    """)
+    st.markdown('<p style="color: #333;"><b>Klasifikasi berdasarkan total skor:</b></p>', unsafe_allow_html=True)
     
     col1, col2, col3 = st.columns(3)
     with col1:
@@ -140,11 +139,9 @@ def render_docs():
     st.markdown("---")
     
     # Machine Learning
-    st.markdown("## 🤖 Machine Learning Detection")
+    st.markdown('<h2 style="color: #333;">🤖 Machine Learning Detection</h2>', unsafe_allow_html=True)
     
-    st.markdown("""
-    Menggunakan **Isolation Forest** untuk anomaly detection:
-    """)
+    st.markdown('<p style="color: #333;">Menggunakan <b>Isolation Forest</b> untuk anomaly detection:</p>', unsafe_allow_html=True)
     
     st.code("""
 # Fitur yang digunakan
@@ -166,32 +163,35 @@ IsolationForest(
     """, language="python")
     
     st.markdown("""
-    **Cara kerja Isolation Forest:**
-    
-    1. Membangun ensemble of trees dengan random splits
-    2. Anomali (buzzer) lebih mudah di-isolate → path lebih pendek
-    3. Normal users membutuhkan lebih banyak splits → path lebih panjang
-    4. Score negatif menandakan anomali
-    """)
+    <p style="color: #333;"><b>Cara kerja Isolation Forest:</b></p>
+    <ol style="color: #333;">
+        <li>Membangun ensemble of trees dengan random splits</li>
+        <li>Anomali (buzzer) lebih mudah di-isolate → path lebih pendek</li>
+        <li>Normal users membutuhkan lebih banyak splits → path lebih panjang</li>
+        <li>Score negatif menandakan anomali</li>
+    </ol>
+    """, unsafe_allow_html=True)
     
     st.markdown("---")
     
     # High Confidence
-    st.markdown("## 🚨 High Confidence Buzzers")
+    st.markdown('<h2 style="color: #333;">🚨 High Confidence Buzzers</h2>', unsafe_allow_html=True)
     
     st.markdown("""
-    **High Confidence Buzzer** adalah user yang terdeteksi oleh **KEDUA** metode:
-    
-    - ✅ Rule-Based: **High Suspicion** (skor ≥ 4)
-    - ✅ Machine Learning: **Suspected Buzzer** (anomaly)
-    
-    > Kombinasi kedua metode meningkatkan confidence level deteksi
-    """)
+    <p style="color: #333;"><b>High Confidence Buzzer</b> adalah user yang terdeteksi oleh <b>KEDUA</b> metode:</p>
+    <ul style="color: #333;">
+        <li>✅ Rule-Based: <b>High Suspicion</b> (skor ≥ 4)</li>
+        <li>✅ Machine Learning: <b>Suspected Buzzer</b> (anomaly)</li>
+    </ul>
+    <blockquote style="color: #666; border-left: 3px solid #667eea; padding-left: 1rem;">
+        Kombinasi kedua metode meningkatkan confidence level deteksi
+    </blockquote>
+    """, unsafe_allow_html=True)
     
     st.markdown("---")
     
     # Limitasi
-    st.markdown("## ⚠️ Limitasi")
+    st.markdown('<h2 style="color: #333;">⚠️ Limitasi</h2>', unsafe_allow_html=True)
     
     st.warning("""
     **Limitasi sistem deteksi:**
@@ -206,7 +206,7 @@ IsolationForest(
     st.markdown("---")
     
     # Interpretasi
-    st.markdown("## 💡 Interpretasi Hasil")
+    st.markdown('<h2 style="color: #333;">💡 Interpretasi Hasil</h2>', unsafe_allow_html=True)
     
     st.info("""
     **Indikator kuat aktivitas buzzer:**

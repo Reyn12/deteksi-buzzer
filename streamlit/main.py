@@ -72,13 +72,18 @@ def setup_page():
         
         /* Button styling */
         .stButton > button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 0.75rem 2rem;
-            border-radius: 10px;
-            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+            color: white !important;
+            border: none !important;
+            padding: 0.75rem 2rem !important;
+            border-radius: 10px !important;
+            font-weight: bold !important;
             transition: all 0.3s ease;
+        }
+        
+        .stButton > button p,
+        .stButton > button span {
+            color: white !important;
         }
         
         .stButton > button:hover {
@@ -271,6 +276,57 @@ def setup_page():
         /* Success/Warning/Info boxes */
         .stAlert {
             border-radius: 10px;
+        }
+        
+        /* Markdown tables - Light Mode */
+        [data-testid="stMarkdownContainer"] table {
+            color: #333 !important;
+        }
+        
+        [data-testid="stMarkdownContainer"] table th {
+            background: #667eea !important;
+            color: #fff !important;
+            padding: 0.5rem 1rem !important;
+        }
+        
+        [data-testid="stMarkdownContainer"] table td {
+            color: #333 !important;
+            background: #fff !important;
+            border: 1px solid #e0e0e0 !important;
+        }
+        
+        /* Code blocks - Light Mode */
+        [data-testid="stCode"] {
+            background: #1e1e1e !important;
+            border-radius: 10px !important;
+        }
+        
+        [data-testid="stCode"] code {
+            color: #d4d4d4 !important;
+        }
+        
+        /* Markdown general - Light Mode (tanpa !important biar inline style bisa override) */
+        [data-testid="stMarkdownContainer"] {
+            color: #333;
+        }
+        
+        [data-testid="stMarkdownContainer"] p,
+        [data-testid="stMarkdownContainer"] li,
+        [data-testid="stMarkdownContainer"] ul,
+        [data-testid="stMarkdownContainer"] ol {
+            color: #333;
+        }
+        
+        [data-testid="stMarkdownContainer"] h1,
+        [data-testid="stMarkdownContainer"] h2,
+        [data-testid="stMarkdownContainer"] h3,
+        [data-testid="stMarkdownContainer"] h4 {
+            color: #333;
+        }
+        
+        /* Horizontal rule */
+        [data-testid="stMarkdownContainer"] hr {
+            border-color: #e0e0e0 !important;
         }
         
         /* Selectbox - Light Mode */
