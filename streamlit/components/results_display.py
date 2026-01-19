@@ -159,6 +159,147 @@ def render_scatter_plot(user_activity: pd.DataFrame):
     st.plotly_chart(fig)
 
 
+def render_score_distributions(user_activity: pd.DataFrame):
+    """Render distribusi score buzzer dan isolation forest."""
+    st.markdown('<h3 style="color: #333;">📊 Distribusi Score</h3>', unsafe_allow_html=True)
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        # Histogram Buzzer Score
+        fig1 = px.histogram(
+            user_activity,
+            x='buzzer_score',
+            nbins=10,
+            title="Distribusi Buzzer Score (Rule-Based)",
+            color_discrete_sequence=['#667eea']
+        )
+        fig1.update_layout(
+            paper_bgcolor='rgba(0,0,0,0)',
+            plot_bgcolor='rgba(0,0,0,0)',
+            font_color='#333',
+            xaxis_title="Buzzer Score",
+            yaxis_title="Frequency",
+            xaxis=dict(
+                tickfont=dict(color='#333'),
+                title=dict(font=dict(color='#333')),
+                gridcolor='rgba(0,0,0,0.1)'
+            ),
+            yaxis=dict(
+                tickfont=dict(color='#333'),
+                title=dict(font=dict(color='#333')),
+                gridcolor='rgba(0,0,0,0.1)'
+            )
+        )
+        st.plotly_chart(fig1)
+    
+    with col2:
+        # Histogram Isolation Forest Score
+        fig2 = px.histogram(
+            user_activity,
+            x='isolation_forest_score',
+            nbins=30,
+            title="Distribusi Anomaly Score (Isolation Forest)",
+            color_discrete_sequence=['#FF6B6B']
+        )
+        fig2.update_layout(
+            paper_bgcolor='rgba(0,0,0,0)',
+            plot_bgcolor='rgba(0,0,0,0)',
+            font_color='#333',
+            xaxis_title="Anomaly Score (Lower = More Suspicious)",
+            yaxis_title="Frequency",
+            xaxis=dict(
+                tickfont=dict(color='#333'),
+                title=dict(font=dict(color='#333')),
+                gridcolor='rgba(0,0,0,0.1)'
+            ),
+            yaxis=dict(
+                tickfont=dict(color='#333'),
+                title=dict(font=dict(color='#333')),
+                gridcolor='rgba(0,0,0,0.1)'
+            )
+        )
+        st.plotly_chart(fig2)
+
+
+def render_boxplot_analysis(user_activity: pd.DataFrame):
+    """Render box plot comment count by category."""
+    st.markdown('<h3 style="color: #333;">📦 Analisis per Kategori</h3>', unsafe_allow_html=True)
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        # Box plot Comment Count by Category
+        category_order = ['Low Suspicion', 'Medium Suspicion', 'High Suspicion']
+        fig1 = px.box(
+            user_activity,
+            x='buzzer_category',
+            y='comment_count',
+            color='buzzer_category',
+            category_orders={'buzzer_category': category_order},
+            color_discrete_map={
+                'High Suspicion': COLORS['high_suspicion'],
+                'Medium Suspicion': COLORS['medium_suspicion'],
+                'Low Suspicion': COLORS['low_suspicion']
+            },
+            title="Comment Count by Buzzer Category"
+        )
+        fig1.update_layout(
+            paper_bgcolor='rgba(0,0,0,0)',
+            plot_bgcolor='rgba(0,0,0,0)',
+            font_color='#333',
+            showlegend=False,
+            xaxis_title="Buzzer Category",
+            yaxis_title="Comment Count",
+            xaxis=dict(
+                tickfont=dict(color='#333'),
+                title=dict(font=dict(color='#333')),
+                gridcolor='rgba(0,0,0,0.1)'
+            ),
+            yaxis=dict(
+                tickfont=dict(color='#333'),
+                title=dict(font=dict(color='#333')),
+                gridcolor='rgba(0,0,0,0.1)'
+            )
+        )
+        st.plotly_chart(fig1)
+    
+    with col2:
+        # Box plot Text Similarity by Category
+        fig2 = px.box(
+            user_activity,
+            x='buzzer_category',
+            y='avg_text_similarity',
+            color='buzzer_category',
+            category_orders={'buzzer_category': category_order},
+            color_discrete_map={
+                'High Suspicion': COLORS['high_suspicion'],
+                'Medium Suspicion': COLORS['medium_suspicion'],
+                'Low Suspicion': COLORS['low_suspicion']
+            },
+            title="Text Similarity by Buzzer Category"
+        )
+        fig2.update_layout(
+            paper_bgcolor='rgba(0,0,0,0)',
+            plot_bgcolor='rgba(0,0,0,0)',
+            font_color='#333',
+            showlegend=False,
+            xaxis_title="Buzzer Category",
+            yaxis_title="Avg Text Similarity",
+            xaxis=dict(
+                tickfont=dict(color='#333'),
+                title=dict(font=dict(color='#333')),
+                gridcolor='rgba(0,0,0,0.1)'
+            ),
+            yaxis=dict(
+                tickfont=dict(color='#333'),
+                title=dict(font=dict(color='#333')),
+                gridcolor='rgba(0,0,0,0.1)'
+            )
+        )
+        st.plotly_chart(fig2)
+
+
 def render_top_buzzers(user_activity: pd.DataFrame):
     """Render tabel top suspected buzzers."""
     # Container dengan padding horizontal - Light Mode
@@ -524,7 +665,11 @@ def render_results(user_activity: pd.DataFrame, summary: dict):
     st.markdown("---")
     render_distribution_chart(user_activity)
     st.markdown("---")
+    render_score_distributions(user_activity)
+    st.markdown("---")
     render_scatter_plot(user_activity)
+    st.markdown("---")
+    render_boxplot_analysis(user_activity)
     st.markdown("---")
     
     # Network visualization

@@ -329,6 +329,14 @@ def setup_page():
             border-color: #e0e0e0 !important;
         }
         
+        /* Caption - Light Mode */
+        [data-testid="stCaptionContainer"],
+        [data-testid="stCaptionContainer"] p,
+        .stCaption,
+        .stCaption p {
+            color: #666 !important;
+        }
+        
         /* Selectbox - Light Mode */
         .stSelectbox label {
             color: #333 !important;
