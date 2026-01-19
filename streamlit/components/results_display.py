@@ -36,7 +36,7 @@ def render_summary_cards(summary: dict):
             border-radius: 15px;
             text-align: center;
         ">
-            <h2 style="color: #333; margin: 0;">{summary['high_suspicion']}</h2>
+            <h2 style="color: white; margin: 0;">{summary['high_suspicion']}</h2>
             <p style="color: rgba(255,255,255,0.8); margin: 0;">High Suspicion</p>
         </div>
         """, unsafe_allow_html=True)
@@ -177,13 +177,11 @@ def render_top_buzzers(user_activity: pd.DataFrame):
             'avg_text_similarity', 'duplicate_ratio', 
             'buzzer_score', 'buzzer_category'
         ]]
-        st.dataframe(
-            top_rule.style.background_gradient(
-                subset=['buzzer_score'],
-                cmap='Reds'
-            ),
-            hide_index=True
-        )
+        styled_df = top_rule.style.background_gradient(
+            subset=['buzzer_score'],
+            cmap='Reds'
+        ).set_properties(**{'color': '#333', 'background-color': '#fff'})
+        st.dataframe(styled_df, hide_index=True)
     
     with tabs[1]:
         ml_buzzers = user_activity[
@@ -193,13 +191,11 @@ def render_top_buzzers(user_activity: pd.DataFrame):
             'avg_text_similarity', 'duplicate_ratio',
             'isolation_forest_score', 'ml_buzzer_label'
         ]]
-        st.dataframe(
-            ml_buzzers.style.background_gradient(
-                subset=['isolation_forest_score'],
-                cmap='Reds_r'
-            ),
-            hide_index=True
-        )
+        styled_ml = ml_buzzers.style.background_gradient(
+            subset=['isolation_forest_score'],
+            cmap='Reds_r'
+        ).set_properties(**{'color': '#333', 'background-color': '#fff'})
+        st.dataframe(styled_ml, hide_index=True)
     
     with tabs[2]:
         high_conf = user_activity[
@@ -212,13 +208,11 @@ def render_top_buzzers(user_activity: pd.DataFrame):
         ]]
         
         if len(high_conf) > 0:
-            st.dataframe(
-                high_conf.style.background_gradient(
-                    subset=['buzzer_score'],
-                    cmap='Reds'
-                ),
-                hide_index=True
-            )
+            styled_high = high_conf.style.background_gradient(
+                subset=['buzzer_score'],
+                cmap='Reds'
+            ).set_properties(**{'color': '#333', 'background-color': '#fff'})
+            st.dataframe(styled_high, hide_index=True)
         else:
             st.info("Tidak ada user dengan High Confidence")
     

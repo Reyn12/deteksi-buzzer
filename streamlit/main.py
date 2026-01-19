@@ -129,6 +129,20 @@ def setup_page():
             border-color: #667eea !important;
         }
         
+        /* Download button - Light Mode */
+        [data-testid="stDownloadButton"] button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 10px !important;
+            padding: 0.5rem 1rem !important;
+        }
+        
+        [data-testid="stDownloadButton"] button:hover {
+            opacity: 0.9 !important;
+            transform: translateY(-1px);
+        }
+        
         /* Progress bar */
         .stProgress > div > div {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -150,10 +164,46 @@ def setup_page():
             color: white;
         }
         
-        /* Dataframe */
+        /* Dataframe - Light Mode */
         .stDataFrame {
             border-radius: 10px;
             overflow: hidden;
+        }
+        
+        .stDataFrame [data-testid="stDataFrameResizable"] {
+            background: #ffffff !important;
+        }
+        
+        .stDataFrame th {
+            background: #667eea !important;
+            color: white !important;
+        }
+        
+        .stDataFrame td {
+            color: #333 !important;
+        }
+        
+        [data-testid="stDataFrame"] div[class*="glideDataEditor"] {
+            background: #ffffff !important;
+        }
+        
+        [data-testid="stDataFrame"] [data-testid="glide-cell"] {
+            color: #333 !important;
+        }
+        
+        /* Dataframe header - Glide Data Grid */
+        [data-testid="stDataFrame"] [class*="header"] {
+            background: #667eea !important;
+            color: #fff !important;
+        }
+        
+        [data-testid="stDataFrame"] canvas + div {
+            color: #fff !important;
+        }
+        
+        [data-testid="stDataFrame"] [class*="dvn-scroller"] [class*="header"] span,
+        [data-testid="stDataFrame"] [role="columnheader"] {
+            color: #fff !important;
         }
         
         /* Expander - Light Mode */
