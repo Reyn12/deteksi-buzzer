@@ -30,23 +30,24 @@ def setup_page():
         initial_sidebar_state="expanded"
     )
     
-    # Custom CSS untuk UI modern
+    # Custom CSS untuk UI modern (Light Mode)
     st.markdown("""
     <style>
-        /* Main background */
+        /* Main background - Light Mode */
         .stApp {
-            background: linear-gradient(180deg, #0E1117 0%, #1a1a2e 100%);
+            background: #f8f9fa;
         }
         
         /* Hide default header */
         header[data-testid="stHeader"] {
-            background: transparent;
+            background: #ffffff;
+            border-bottom: 1px solid #e0e0e0;
         }
         
-        /* Sidebar styling */
+        /* Sidebar styling - Light Mode */
         [data-testid="stSidebar"] {
-            background: linear-gradient(180deg, #1a1a2e 0%, #0E1117 100%);
-            border-right: 1px solid #333;
+            background: #ffffff;
+            border-right: 1px solid #e0e0e0;
             min-width: 280px;
             max-width: 280px;
         }
@@ -56,16 +57,17 @@ def setup_page():
         }
         
         [data-testid="stSidebar"] .stRadio > label {
-            color: white;
+            color: #333;
             font-weight: bold;
         }
         
-        /* Cards styling */
+        /* Cards styling - Light Mode */
         .stMetric {
-            background: #1E1E1E;
+            background: #ffffff;
             padding: 1rem;
             border-radius: 10px;
-            border: 1px solid #333;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
         
         /* Button styling */
@@ -84,11 +86,12 @@ def setup_page():
             box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
         }
         
-        /* File uploader */
+        /* File uploader - Light Mode */
         .stFileUploader {
-            background: #1E1E1E;
+            background: #ffffff;
             border-radius: 10px;
             padding: 1rem;
+            border: 1px solid #e0e0e0;
         }
         
         /* Progress bar */
@@ -96,14 +99,14 @@ def setup_page():
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
         
-        /* Tabs */
+        /* Tabs - Light Mode */
         .stTabs [data-baseweb="tab-list"] {
             gap: 2rem;
         }
         
         .stTabs [data-baseweb="tab"] {
             background: transparent;
-            color: #888;
+            color: #666;
             border-radius: 10px 10px 0 0;
         }
         
@@ -118,10 +121,11 @@ def setup_page():
             overflow: hidden;
         }
         
-        /* Expander */
+        /* Expander - Light Mode */
         .streamlit-expanderHeader {
-            background: #1E1E1E;
+            background: #ffffff;
             border-radius: 10px;
+            border: 1px solid #e0e0e0;
         }
         
         /* Success/Warning/Info boxes */
@@ -178,16 +182,16 @@ def render_sidebar():
         
         st.markdown("---")
         
-        # Info box
+        # Info box - Light Mode
         st.markdown("""
         <div style="
-            background: #1E1E1E;
+            background: #f8f9fa;
             padding: 1rem;
             border-radius: 10px;
-            border: 1px solid #333;
+            border: 1px solid #e0e0e0;
             margin-top: 1rem;
         ">
-            <p style="color: #ffffff; font-size: 0.85rem; margin: 0;">
+            <p style="color: #333; font-size: 0.85rem; margin: 0;">
                 <b style="color: #667eea;">Kelompok 3</b><br><br>
                 Muhamad Hilmi F - 10122028 (PM)<br>
                 Renaldi Maulana - 10122002<br>
@@ -220,7 +224,7 @@ def render_main_header():
             🔍 Deteksi Buzzer
         </h1>
         <p style="
-            color: #888;
+            color: #666;
             font-size: 1.1rem;
         ">
             Analisis komentar YouTube untuk mendeteksi aktivitas buzzer
@@ -244,15 +248,16 @@ def process_detection(files, progress_container):
     """
     try:
         with progress_container:
-            # Progress UI yang lebih bagus
+            # Progress UI - Light Mode
             st.markdown("""
             <div style="
-                background: #1E1E1E;
+                background: #ffffff;
                 padding: 1.5rem;
                 border-radius: 15px;
-                border: 1px solid #333;
+                border: 1px solid #e0e0e0;
                 max-width: 500px;
                 margin: 0 auto;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             ">
                 <h4 style="color: #667eea; margin: 0 0 1rem 0; text-align: center;">
                     ⏳ Memproses Data...

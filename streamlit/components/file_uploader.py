@@ -58,12 +58,13 @@ def render_file_uploader() -> Optional[List]:
         with cols[i]:
             st.markdown(f"""
             <div style="
-                background: #1E1E1E;
+                background: #ffffff;
                 padding: 0.75rem 1rem;
                 border-radius: 10px;
-                border: 1px solid #333;
+                border: 1px solid #e0e0e0;
                 margin-bottom: 0.5rem;
                 text-align: center;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             ">
                 <p style="color: #667eea; font-weight: bold; margin: 0; font-size: 0.9rem;">
                     📁 Video {i + 1}

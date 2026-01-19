@@ -146,15 +146,15 @@ def render_scatter_plot(user_activity: pd.DataFrame):
 
 def render_top_buzzers(user_activity: pd.DataFrame):
     """Render tabel top suspected buzzers."""
-    # Container dengan padding horizontal
+    # Container dengan padding horizontal - Light Mode
     st.markdown("""
-    <div style="padding: 0 2rem;">
-        <h3>🚨 Top Suspected Buzzers</h3>
+    <div style="padding: 0 1rem;">
+        <h3 style="color: #333;">🚨 Top Suspected Buzzers</h3>
     </div>
     """, unsafe_allow_html=True)
     
     # Wrapper dengan padding
-    st.markdown('<div style="padding: 0 2rem;">', unsafe_allow_html=True)
+    st.markdown('<div style="padding: 0 1rem;">', unsafe_allow_html=True)
     
     tabs = st.tabs(["Rule-Based", "Machine Learning", "High Confidence"])
     
@@ -227,37 +227,37 @@ def render_conclusion(user_activity: pd.DataFrame, summary: dict):
     pct_normal = (ml_normal / total * 100) if total > 0 else 0
     pct_high_conf = (high_conf / total * 100) if total > 0 else 0
     
-    # Main conclusion box - pisah jadi beberapa st.markdown
+    # Main conclusion box - Light Mode
     st.markdown(f"""
-<div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border: 1px solid #333; border-radius: 20px; padding: 2rem; margin: 1rem 0;">
+<div style="background: #ffffff; border: 1px solid #e0e0e0; border-radius: 20px; padding: 2rem; margin: 1rem 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
 <h2 style="text-align: center; color: #667eea; margin-bottom: 1.5rem;">📊 Hasil Analisis</h2>
 <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
-<div style="background: linear-gradient(135deg, #FF4B4B, #FF6B6B); border-radius: 15px; padding: 1.5rem 2rem; text-align: center; min-width: 200px;">
+<div style="background: linear-gradient(135deg, #FF4B4B, #FF6B6B); border-radius: 15px; padding: 1.5rem 2rem; text-align: center; min-width: 200px; box-shadow: 0 4px 15px rgba(255,75,75,0.3);">
 <h1 style="color: white; margin: 0; font-size: 2.5rem;">{pct_suspected:.1f}%</h1>
 <p style="color: rgba(255,255,255,0.9); margin: 0.5rem 0 0 0; font-weight: bold;">Suspected Buzzer</p>
 <p style="color: rgba(255,255,255,0.7); margin: 0; font-size: 0.85rem;">({ml_suspected:,} dari {total:,} users)</p>
 </div>
-<div style="background: linear-gradient(135deg, #00CC96, #00E5AA); border-radius: 15px; padding: 1.5rem 2rem; text-align: center; min-width: 200px;">
+<div style="background: linear-gradient(135deg, #00CC96, #00E5AA); border-radius: 15px; padding: 1.5rem 2rem; text-align: center; min-width: 200px; box-shadow: 0 4px 15px rgba(0,204,150,0.3);">
 <h1 style="color: white; margin: 0; font-size: 2.5rem;">{pct_normal:.1f}%</h1>
 <p style="color: rgba(255,255,255,0.9); margin: 0.5rem 0 0 0; font-weight: bold;">Normal User</p>
 <p style="color: rgba(255,255,255,0.7); margin: 0; font-size: 0.85rem;">({ml_normal:,} dari {total:,} users)</p>
 </div>
 </div>
 <div style="background: rgba(255, 75, 75, 0.1); border: 1px solid #FF4B4B; border-radius: 10px; padding: 1rem; margin-top: 1.5rem; text-align: center;">
-<p style="color: #FF6B6B; margin: 0; font-size: 1.1rem;">🚨 <b>High Confidence Buzzer:</b> {high_conf} users ({pct_high_conf:.1f}%)</p>
-<p style="color: #888; margin: 0.5rem 0 0 0; font-size: 0.85rem;">Terdeteksi oleh kedua metode (Rule-Based & Machine Learning)</p>
+<p style="color: #e53935; margin: 0; font-size: 1.1rem;">🚨 <b>High Confidence Buzzer:</b> {high_conf} users ({pct_high_conf:.1f}%)</p>
+<p style="color: #666; margin: 0.5rem 0 0 0; font-size: 0.85rem;">Terdeteksi oleh kedua metode (Rule-Based & Machine Learning)</p>
 </div>
 </div>
     """, unsafe_allow_html=True)
     
-    # Interpretasi
+    # Interpretasi - Light Mode
     col1, col2 = st.columns(2)
     
     with col1:
         st.markdown("""
-<div style="background: #1E1E1E; border-radius: 15px; padding: 1.5rem; border: 1px solid #333;">
+<div style="background: #ffffff; border-radius: 15px; padding: 1.5rem; border: 1px solid #e0e0e0; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
 <h4 style="color: #667eea; margin: 0 0 1rem 0;">💡 Interpretasi</h4>
-<ul style="color: #ccc; margin: 0; padding-left: 1.2rem; line-height: 1.8;">
+<ul style="color: #444; margin: 0; padding-left: 1.2rem; line-height: 1.8;">
 <li>Buzzer menunjukkan pola posting tidak natural</li>
 <li>Copy-paste konten adalah indikator kuat</li>
 <li>Kombinasi kedua metode meningkatkan akurasi</li>
@@ -268,9 +268,9 @@ def render_conclusion(user_activity: pd.DataFrame, summary: dict):
     
     with col2:
         st.markdown("""
-<div style="background: #1E1E1E; border-radius: 15px; padding: 1.5rem; border: 1px solid #333;">
+<div style="background: #ffffff; border-radius: 15px; padding: 1.5rem; border: 1px solid #e0e0e0; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
 <h4 style="color: #00CC96; margin: 0 0 1rem 0;">✅ Rekomendasi</h4>
-<ul style="color: #ccc; margin: 0; padding-left: 1.2rem; line-height: 1.8;">
+<ul style="color: #444; margin: 0; padding-left: 1.2rem; line-height: 1.8;">
 <li>Review manual High Confidence Buzzers</li>
 <li>Analisis temporal pattern lebih detail</li>
 <li>Validasi dengan ground truth jika ada</li>
