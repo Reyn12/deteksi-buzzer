@@ -558,6 +558,7 @@ def process_detection(files, progress_container):
             network = NetworkAnalyzer(featured_data, tfidf_matrix)
             centrality_df = network.analyze(threshold=0.3)
             network_stats = network.get_network_stats()
+            graph = network.get_graph()
             
             # Step 5: Detect buzzers
             status_text.markdown("🔍 **Mendeteksi buzzer...**")
@@ -570,6 +571,7 @@ def process_detection(files, progress_container):
             summary['load_stats'] = load_stats
             summary['clean_stats'] = clean_stats
             summary['network_stats'] = network_stats
+            summary['graph'] = graph
             
             # Done
             status_text.markdown("✅ **Selesai!**")

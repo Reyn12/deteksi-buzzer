@@ -3,8 +3,10 @@ Komponen UI untuk menampilkan hasil deteksi
 """
 import streamlit as st
 import pandas as pd
+import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
+import networkx as nx
 from config import COLORS
 from utils.helpers import calculate_percentage
 
@@ -287,6 +289,202 @@ def render_conclusion(user_activity: pd.DataFrame, summary: dict):
         """, unsafe_allow_html=True)
 
 
+def render_network_graph(user_activity: pd.DataFrame, graph: nx.Graph):
+    """Render visualisasi Social Network Analysis."""
+    st.markdown('<h3 style="color: #333;">🕸️ Social Network Analysis</h3>', unsafe_allow_html=True)
+    
+    if graph is None or graph.number_of_nodes() == 0:
+        st.info("Network graph tidak tersedia.")
+        return
+    
+    # Limit nodes untuk performa (max 100 nodes)
+    max_nodes = 100
+    if graph.number_of_nodes() > max_nodes:
+        # Ambil nodes dengan degree tertinggi
+        degrees = dict(graph.degree())
+        top_nodes = sorted(degrees.keys(), key=lambda x: degrees[x], reverse=True)[:max_nodes]
+        graph = graph.subgraph(top_nodes).copy()
+        st.caption(f"⚠️ Menampilkan {max_nodes} nodes dengan koneksi tertinggi (dari {len(degrees)} total)")
+    
+    # Get positions using spring layout
+    pos = nx.spring_layout(graph, k=2, iterations=50, seed=42)
+    
+    # Create edge traces
+    edge_x = []
+    edge_y = []
+    for edge in graph.edges():
+        x0, y0 = pos[edge[0]]
+        x1, y1 = pos[edge[1]]
+        edge_x.extend([x0, x1, None])
+        edge_y.extend([y0, y1, None])
+    
+    edge_trace = go.Scatter(
+        x=edge_x, y=edge_y,
+        line=dict(width=0.5, color='#888'),
+        hoverinfo='none',
+        mode='lines'
+    )
+    
+    # Create node traces
+    node_x = []
+    node_y = []
+    node_colors = []
+    node_sizes = []
+    node_text = []
+    
+    for node in graph.nodes():
+        x, y = pos[node]
+        node_x.append(x)
+        node_y.append(y)
+        
+        # Get user data
+        if node in user_activity['author'].values:
+            user_data = user_activity[user_activity['author'] == node].iloc[0]
+            category = user_data['buzzer_category']
+            ml_label = user_data['ml_buzzer_label']
+            score = user_data['buzzer_score']
+            
+            # Color based on category
+            if category == 'High Suspicion':
+                node_colors.append('#FF4B4B')
+                node_sizes.append(20)
+            elif category == 'Medium Suspicion':
+                node_colors.append('#FFA500')
+                node_sizes.append(15)
+            else:
+                node_colors.append('#00CC96')
+                node_sizes.append(10)
+            
+            node_text.append(
+                f"<b>{node}</b><br>"
+                f"Category: {category}<br>"
+                f"ML: {ml_label}<br>"
+                f"Score: {score}"
+            )
+        else:
+            node_colors.append('#888')
+            node_sizes.append(8)
+            node_text.append(node)
+    
+    node_trace = go.Scatter(
+        x=node_x, y=node_y,
+        mode='markers',
+        hoverinfo='text',
+        text=node_text,
+        marker=dict(
+            color=node_colors,
+            size=node_sizes,
+            line=dict(width=1, color='white')
+        )
+    )
+    
+    # Create tabs for different views
+    tabs = st.tabs(["Rule-Based View", "Machine Learning View"])
+    
+    with tabs[0]:
+        # Rule-based view
+        fig1 = go.Figure(data=[edge_trace, node_trace],
+                        layout=go.Layout(
+                            title=dict(
+                                text='Network Buzzer Detection (Rule-Based)',
+                                font=dict(color='#333', size=16)
+                            ),
+                            showlegend=False,
+                            hovermode='closest',
+                            margin=dict(b=20, l=20, r=20, t=50),
+                            xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+                            yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+                            paper_bgcolor='rgba(0,0,0,0)',
+                            plot_bgcolor='rgba(0,0,0,0)',
+                            annotations=[
+                                dict(
+                                    text="🔴 High Suspicion | 🟠 Medium | 🟢 Low",
+                                    showarrow=False,
+                                    xref="paper", yref="paper",
+                                    x=0.5, y=-0.05,
+                                    font=dict(size=12, color='#666')
+                                )
+                            ]
+                        ))
+        st.plotly_chart(fig1, use_container_width=True)
+    
+    with tabs[1]:
+        # ML view - recolor nodes
+        ml_colors = []
+        ml_sizes = []
+        ml_text = []
+        
+        for node in graph.nodes():
+            if node in user_activity['author'].values:
+                user_data = user_activity[user_activity['author'] == node].iloc[0]
+                ml_label = user_data['ml_buzzer_label']
+                score = user_data['isolation_forest_score']
+                
+                if ml_label == 'Suspected Buzzer':
+                    ml_colors.append('#9C27B0')  # Purple
+                    ml_sizes.append(20)
+                else:
+                    ml_colors.append('#00CC96')  # Green
+                    ml_sizes.append(10)
+                
+                ml_text.append(
+                    f"<b>{node}</b><br>"
+                    f"ML Label: {ml_label}<br>"
+                    f"IF Score: {score:.4f}"
+                )
+            else:
+                ml_colors.append('#888')
+                ml_sizes.append(8)
+                ml_text.append(node)
+        
+        ml_node_trace = go.Scatter(
+            x=node_x, y=node_y,
+            mode='markers',
+            hoverinfo='text',
+            text=ml_text,
+            marker=dict(
+                color=ml_colors,
+                size=ml_sizes,
+                line=dict(width=1, color='white')
+            )
+        )
+        
+        fig2 = go.Figure(data=[edge_trace, ml_node_trace],
+                        layout=go.Layout(
+                            title=dict(
+                                text='Network Buzzer Detection (Machine Learning)',
+                                font=dict(color='#333', size=16)
+                            ),
+                            showlegend=False,
+                            hovermode='closest',
+                            margin=dict(b=20, l=20, r=20, t=50),
+                            xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+                            yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+                            paper_bgcolor='rgba(0,0,0,0)',
+                            plot_bgcolor='rgba(0,0,0,0)',
+                            annotations=[
+                                dict(
+                                    text="🟣 Suspected Buzzer | 🟢 Normal User",
+                                    showarrow=False,
+                                    xref="paper", yref="paper",
+                                    x=0.5, y=-0.05,
+                                    font=dict(size=12, color='#666')
+                                )
+                            ]
+                        ))
+        st.plotly_chart(fig2, use_container_width=True)
+    
+    # Network stats
+    st.markdown("""
+    <div style="background: #f8f9fa; border-radius: 10px; padding: 1rem; margin-top: 1rem;">
+        <p style="color: #666; margin: 0; text-align: center;">
+            <b>Cara Baca:</b> Node yang lebih besar dan berwarna merah/ungu adalah suspected buzzer. 
+            Garis menghubungkan user dengan komentar serupa (text similarity > 0.3).
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+
 def render_download_button(user_activity: pd.DataFrame):
     """Render tombol download hasil."""
     st.markdown('<h3 style="color: #333;">💾 Export Hasil</h3>', unsafe_allow_html=True)
@@ -328,6 +526,13 @@ def render_results(user_activity: pd.DataFrame, summary: dict):
     st.markdown("---")
     render_scatter_plot(user_activity)
     st.markdown("---")
+    
+    # Network visualization
+    graph = summary.get('graph', None)
+    if graph is not None:
+        render_network_graph(user_activity, graph)
+        st.markdown("---")
+    
     render_top_buzzers(user_activity)
     st.markdown("---")
     render_download_button(user_activity)

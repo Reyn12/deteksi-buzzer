@@ -109,3 +109,12 @@ class NetworkAnalyzer:
             'avg_degree': sum(dict(self.graph.degree()).values()) / self.graph.number_of_nodes()
             if self.graph.number_of_nodes() > 0 else 0
         }
+    
+    def get_graph(self) -> nx.Graph:
+        """
+        Mendapatkan graph object.
+        
+        Returns:
+            NetworkX Graph object
+        """
+        return self.graph
