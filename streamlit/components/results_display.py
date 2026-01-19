@@ -36,7 +36,7 @@ def render_summary_cards(summary: dict):
             border-radius: 15px;
             text-align: center;
         ">
-            <h2 style="color: white; margin: 0;">{summary['high_suspicion']}</h2>
+            <h2 style="color: #333; margin: 0;">{summary['high_suspicion']}</h2>
             <p style="color: rgba(255,255,255,0.8); margin: 0;">High Suspicion</p>
         </div>
         """, unsafe_allow_html=True)
@@ -91,7 +91,8 @@ def render_distribution_chart(user_activity: pd.DataFrame):
         fig1.update_layout(
             paper_bgcolor='rgba(0,0,0,0)',
             plot_bgcolor='rgba(0,0,0,0)',
-            font_color='white'
+            font_color='#333',
+            legend=dict(font=dict(color='#333'))
         )
         st.plotly_chart(fig1)
     
@@ -111,7 +112,8 @@ def render_distribution_chart(user_activity: pd.DataFrame):
         fig2.update_layout(
             paper_bgcolor='rgba(0,0,0,0)',
             plot_bgcolor='rgba(0,0,0,0)',
-            font_color='white'
+            font_color='#333',
+            legend=dict(font=dict(color='#333'))
         )
         st.plotly_chart(fig2)
 
@@ -137,9 +139,20 @@ def render_scatter_plot(user_activity: pd.DataFrame):
     fig.update_layout(
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',
-        font_color='white',
+        font_color='#333',
         xaxis_title="Posting Rate (komentar/jam)",
-        yaxis_title="Avg Text Similarity"
+        yaxis_title="Avg Text Similarity",
+        legend=dict(font=dict(color='#333')),
+        xaxis=dict(
+            tickfont=dict(color='#333'),
+            title=dict(font=dict(color='#333')),
+            gridcolor='rgba(0,0,0,0.1)'
+        ),
+        yaxis=dict(
+            tickfont=dict(color='#333'),
+            title=dict(font=dict(color='#333')),
+            gridcolor='rgba(0,0,0,0.1)'
+        )
     )
     st.plotly_chart(fig)
 
